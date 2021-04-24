@@ -3,7 +3,7 @@ interactive -p nocona -c 1
 
 
 #Move to working directory 
-cd *working directory*
+cd <working directory>
 
 
 #Concatenate all scaffold .recode.vcf files into one 

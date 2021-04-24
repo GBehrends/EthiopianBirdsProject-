@@ -16,5 +16,7 @@ An analysis of a potential barrier to gene flow
 6. Run the 05_filter_vcf.sh script
 
 #Continued pipeline by me
+
 7. Concatenate filtered ".recode.vcf" scaffold files into one genome-wide file then separate by sample using the 06_concatenate.sh script 
+
 8. Export the concatenated sample .vcf files to local computer for further analysis. 

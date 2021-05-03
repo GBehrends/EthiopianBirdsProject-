@@ -15,6 +15,8 @@ workdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/Group
 
 #Use different --thin filter settings to space SNPs apart to limit the effects of linkage on downstream analyses 
 
+#keeplist.txt is a list of all sample IDs within the combined vcf files that you want to isolate. In my Ethiopian Birds Project, I did it for my 6 focal species individually. 
+
 # run vcftools with SNP output spaced 10kbp
 vcftools --vcf ${workdir}/03_vcf/${input_array}.g.vcf --keep keeplist.txt --max-missing 1.0 --minQ 20 --minGQ 20 --minDP 8 --max-meanDP 50 --min-al
 leles 2 --max-alleles 2 --mac 1 --thin 10000 --max-maf 0.49 --remove-indels --recode --recode-INFO-all --out ${workdir}/10kbp_filtered_vcf/${input_

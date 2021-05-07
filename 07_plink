@@ -1,0 +1,17 @@
+#Before feeding the data we have into DAPC, we'll need to convert our vcf files to a plink file format, and then to a structure file format:
+
+
+#Move to 06_concatenate directory
+cd 06_concatenate
+
+#Make directory for ped, map, and log files 
+mkdir ../07_plink
+
+#Make chromosome map for vcf to plink format conversion 
+paste ../11_genotype_scripts/02_gatk_split/helper3.txt ../11_genotype_scripts/02_gatk_split/helper3.txt | column -s $'\t' -t > chrom_map.txt
+
+#Create a list for running a for loop on all concatenated vcf files
+ls | grep .vcf | sed 's/.vcf//g' > vcf2plink_list.txt
+
+#Run the for loop in vcftool, converting to plink format
+for i in $(cat vcf2plink_list.txt); do vcftools --vcf ${i}.vcf --plink --chrom-map chrom_map.txt --out ../07_plink/${i}; done 

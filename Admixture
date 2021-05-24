@@ -1,0 +1,15 @@
+#Move to the directory with complete filtered vcfs 
+cd 06_concatenate
+
+# Make a chromosome-map consusting a 2 columns, each containing a list of all chromosomes. An example can be seen in the main project folder.
+
+#Set up a list of all filtered and combined vcf files without the .vcf prefix and name it plinklist
+
+#Run vcftools to convert the vcfs into ped, map, and log files
+for i in $(cat plinklist); do vcftools --vcf ${i}_filtered.vcf --plink --chrom-map chrom_map.txt --out ${i}.ped; done
+
+#Run plink  to convert these files into files for the admixture program (--allow-extra-chr allows for chomosomes with nontraditional names)
+for i in $(cat plinklist); do plink --file ${i} --recode --allow-extra-chr  --out ${i}2 --noweb; done
+
+#Run admixture after installing the program 
+for i in $(cat plinklist); do for K in 1 2 3; do admixture --cv ${i}2.ped $K | tee log_${i}_${K}.out; done; done

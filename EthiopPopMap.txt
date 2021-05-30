@@ -41,3 +41,6 @@ Zosterops_poliogastrus_EB065 40
 Zosterops_poliogastrus_EB081 41
 Zosterops_poliogastrus_EB089 42
 Zosterops_poliogastrus_EB090 43
+Serinus_tristriatus_EB086 44
+Serinus_tristriatus_EB092 45
+Serinus_tristriatus_EB094 46

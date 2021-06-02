@@ -1,10 +1,10 @@
-# start an interactive session and wait to be logged in to a compute node
+# Start an interactive session and wait to be logged in to a compute node
 interactive -c 1 -p quanah
 
-# move to your working directory for this project
+# Move to your working directory for this project
 cd <working directory>
 
-#Make directories for all species as well as nested 00_fastq directories
+# Make directories for all species as well as nested 00_fastq directories
 mkdir *species name*
 mkdir *species name*/00_fastq
 
@@ -16,9 +16,14 @@ mkdir *species name*/00_fastq
 #####################################
 #####################################
 
+# Copy the contents of PopMap_rename.sh into a script and then make the script executeable using chmod. 
 
-#Run Pop_Map.sh. This renames samples in each 00_fastq directory in a numbered fashion and generates a map to know what number corresponds to what original sample name, as well as a list of the sample prefixes for later use. 
+# Run PopMap_rename.sh.
+# This renames samples in each 00_fastq directory in a numbered fashion #
+# and generates a map to know what number corresponds to what original  #
+# sample name, as well as a list of the sample prefixes for later use.  #
+
 ./PopMap_Rename.sh
 
 
-#Check to see all the files are in their proper place and the numbers and original file names correspond to eachother. 
+# Check to see all the files are in their proper place and the numbers and original file names correspond to eachother. 

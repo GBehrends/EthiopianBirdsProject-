@@ -1,3 +1,15 @@
+# WARNING #
+# DO NOT USE THIS METHOD IF ONE SPECIES HAS MORE THAN 9 SAMPLES #
+# If you have more than 9 samples per species, you will have to #
+# make directories for subsets of 9 individuals per species, OR #
+# manually rename your samples in the fashion presented in the  #
+# "EthiopPopMap.txt Example" file, except that you will have to #
+# number 1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 20, 21.. #
+# etc. IN THAT ORDER. The programs further downstream read      #
+# samples in in this way. You can use the PopMap_rename.sh and  #
+# edit the names and popmap file accordingly if needed after    #
+# running it.                                                   #
+
 # Start an interactive session and wait to be logged in to a compute node
 interactive -c 1 -p quanah
 

@@ -56,7 +56,12 @@ paste Numbers2 R1R2 | sed 's/\t/_/g' > NewNames
 cut -f 1 PopMap > samples
 
 paste samples NewNames > rename_list.txt
-rm Numbers2 samples R1R2 NewNames 
+rm Numbers2 samples R1R2 NewNames
+
+#Make a reduced PopMap for later genotyping steps
+more PopMap | sed 's/R1/R2/g' | uniq | sed 's/_R2.fastq.gz//g' > PopMap2
+rm PopMap
+mv PopMap2 PopMap
 
 #Renaming 
 

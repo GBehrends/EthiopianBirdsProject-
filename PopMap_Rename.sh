@@ -43,6 +43,8 @@ ls | grep "fastq" | sort -n > samples
 
 paste samples Numbers2 > PopMap
 
+sed -i 's/\t/ /g' PopMap
+
 rm samples 
 
 #Make List of what to rename the files to 

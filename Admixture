@@ -1,15 +1,31 @@
 #Move to the directory with complete filtered vcfs 
-cd 06_concatenate
+cd EthiopianBirdsProject/ConcatVcf
 
 # Make a chromosome-map consisting of 2 columns, each containing a list of all chromosomes. An example can be seen in the main project folder.
+# (Taken from JD Manthey)
 
-#Set up a list of all filtered and combined vcf files without the .vcf prefix and name it plinklist
+grep -v "#" batis.vcf | cut -f 1 | uniq | awk '{print $0"\t"$0}' > chrom_map.txt
 
-#Run vcftools to convert the vcfs into ped, map, and log files
-for i in $(cat plinklist); do vcftools --vcf ${i}_filtered.vcf --plink --chrom-map chrom_map.txt --out ${i}.ped; done
+# Submit the plink_convert.sh script to convert the vcfs to plink format
 
-#Run plink  to convert these files into files for the admixture program (--allow-extra-chr allows for chomosomes with nontraditional names)
-for i in $(cat plinklist); do plink --file ${i} --recode --allow-extra-chr  --out ${i}2 --noweb; done
+# Intiate interactive session. 
+# Since admixture uses the outputted .ped files, I used a list of these files to run an admixture for loop to avoid running admixture 60 times individuals.
 
-#Run admixture after installing the program 
-for i in $(cat plinklist); do for K in 1 2 3; do admixture --cv ${i}2.ped $K | tee log_${i}_${K}.out; done; done
+ls | grep "ped" | grep "kbp2" > AdmixtureList.txt
+
+# Run Admixture using a for loop on the input AdmixtureList file. 
+
+ for i in $(cat AdmixtureList.txt); do for K in 1 2 3 4 5; do admixture --cv ${i} $K | tee log_${i}_$K.out; done; done
+ 
+ # This will output 60 admixture runs, 5 for each of the 12 ped files.
+ # To compare between results between the two filtering schemes, and between species, I placed all of the CV outputs used to indicate the likely number 
+ # of populations into one file with the appropriate header. 
+ 
+ # I started by generating a list of the unique log output files then ran this in a for loop that put all the cv outputs for each k for each species
+ # into one file with the appropriate species header. An example is shown in EthiopianBirdsProject directory. 
+ 
+ ls | grep "ped_" | sed 's/_/\t/g' | cut -f 1,2,3 | sed 's/\t/_/g' | uniq > logList.txt
+ 
+ for i in $(cat logList.txt); do more logList.txt | grep ${i} >> CV.txt; grep -h CV ${i}_*.out >> CV.txt; done
+ 
+ 

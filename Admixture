@@ -22,7 +22,7 @@ ls | grep "ped" | grep "kbp2" > AdmixtureList.txt
  # of populations into one file with the appropriate header. 
  
  # I started by generating a list of the unique log output files then ran this in a for loop that put all the cv outputs for each k for each species
- # into one file with the appropriate species header. An example is shown in EthiopianBirdsProject directory. 
+ # into one file with the appropriate species header. An example is shown in EthiopianBirdsProject directory as CV.txt. 
  
  ls | grep "ped_" | sed 's/_/\t/g' | cut -f 1,2,3 | sed 's/\t/_/g' | uniq > logList.txt
  

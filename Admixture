@@ -1,7 +1,7 @@
 #Move to the directory with complete filtered vcfs 
 cd 06_concatenate
 
-# Make a chromosome-map consusting a 2 columns, each containing a list of all chromosomes. An example can be seen in the main project folder.
+# Make a chromosome-map consisting of 2 columns, each containing a list of all chromosomes. An example can be seen in the main project folder.
 
 #Set up a list of all filtered and combined vcf files without the .vcf prefix and name it plinklist
 

@@ -1,0 +1,72 @@
+log_Cossypha_10kbp2.ped
+CV error (K=1): 1.32234
+CV error (K=2): 1.65545
+CV error (K=3): 1.75237
+CV error (K=4): 1.87919
+CV error (K=5): 0.99516
+log_Cossypha_20kbp2.ped
+CV error (K=1): 1.33736
+CV error (K=2): 1.60011
+CV error (K=3): 1.76374
+CV error (K=4): 1.94004
+CV error (K=5): 1.22475
+log_Melaenornis_10kbp2.ped
+CV error (K=1): 1.42273
+CV error (K=2): 2.18350
+CV error (K=3): 2.49499
+CV error (K=4): 2.18865
+CV error (K=5): 0.78155
+log_Melaenornis_20kbp2.ped
+CV error (K=1): 1.42391
+CV error (K=2): 2.17729
+CV error (K=3): 2.35796
+CV error (K=4): 2.17192
+CV error (K=5): 0.85542
+log_Parophasma_10kbp2.ped
+CV error (K=1): 1.77289
+CV error (K=2): 1.83360
+CV error (K=3): 2.15992
+CV error (K=4): 0.74758
+CV error (K=5): 0.18817
+log_Parophasma_20kbp2.ped
+CV error (K=1): 1.79630
+CV error (K=2): 1.83047
+CV error (K=3): 2.09209
+CV error (K=4): 0.75219
+CV error (K=5): 0.19302
+log_Serinus_10kbp2.ped
+CV error (K=1): 1.36518
+CV error (K=2): 1.70529
+CV error (K=3): 1.74191
+CV error (K=4): 2.09381
+CV error (K=5): 1.70308
+log_Serinus_20kbp2.ped
+CV error (K=1): 1.38846
+CV error (K=2): 1.77704
+CV error (K=3): 1.72997
+CV error (K=4): 2.04351
+CV error (K=5): 1.16890
+log_Turdus_10kbp2.ped
+CV error (K=1): 1.14122
+CV error (K=2): 1.54943
+CV error (K=3): 1.72963
+CV error (K=4): 1.92056
+CV error (K=5): 1.25641
+log_Turdus_20kbp2.ped
+CV error (K=1): 1.14287
+CV error (K=2): 1.54780
+CV error (K=3): 1.76290
+CV error (K=4): 1.84811
+CV error (K=5): 1.25900
+log_Zosterops_10kbp2.ped
+CV error (K=1): 1.29791
+CV error (K=2): 1.77209
+CV error (K=3): 1.97061
+CV error (K=4): 1.87779
+CV error (K=5): 0.95741
+log_Zosterops_20kbp2.ped
+CV error (K=1): 1.31006
+CV error (K=2): 1.81796
+CV error (K=3): 1.95071
+CV error (K=4): 1.97054
+CV error (K=5): 0.97120

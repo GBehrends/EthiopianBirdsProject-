@@ -33,4 +33,16 @@ ls | grep "ped" | grep "kbp2" > AdmixtureList.txt
 
 for q in $(cat QtoTSVList.txt); do sed 's/ /\t/g' ${q}Q > ${q}tsv; done
 
+# In R, it will be useful to have each row of the tsv file labeled with its proper SampleID. For this I used a sampleID list derived from the first
+# column of the PopMap files in the 00fastq directories for each species directory. I pasted the Sample IDs to the tsv file for each species in the Admixture 
+# directory that housed my tsv files and named the new files with a labeled designation.  
+
+# Starting from parent directory
+
+cd Turdus_abyssinicus/00fastq 
+paste -d "\," SampleID.txt ../../Admixture/Turdus_10kbp2.3.tsv | sed 's/,/\t/g' > ../../Admixture/Turuds_Labeled.3.tsv
+
+
+
+
 # Export these to computer for plotting

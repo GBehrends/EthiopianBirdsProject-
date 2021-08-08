@@ -42,7 +42,7 @@ for q in $(cat QtoTSVList.txt); do sed 's/ /\t/g' ${q}Q > ${q}tsv; done
 cd Turdus_abyssinicus/00fastq 
 paste -d "\," SampleID.txt ../../Admixture/Turdus_10kbp2.3.tsv | sed 's/,/\t/g' > ../../Admixture/Turuds_Labeled.3.tsv
 
-
+#Repeat this for all species and thinning filters. 
 
 
 # Export these to computer for plotting

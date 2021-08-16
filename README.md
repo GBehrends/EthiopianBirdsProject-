@@ -1,7 +1,8 @@
 # EthiopianBirdsProject-
 An analysis of a potential barrier to gene flow 
 
-# Initial genoytping pipeline adapted from pipeline by Joseph D. Manthey @ https://github.com/jdmanthey/camponotus_relatedness
+# Genotyping pipeline 
+# Adapted from pipeline by Joseph D. Manthey @ https://github.com/jdmanthey/camponotus_relatedness
 1. Perform all steps in 01_setup.sh interactively.
 2. Modify the 02_trim_align.sh script as necessary for your directory, put it in your 10_align_script directory, and submit the script for running.
 3. Run an interactive job on the cluster.
@@ -16,7 +17,7 @@ An analysis of a potential barrier to gene flow
 6. Run the 05_filter_vcf.sh script
 
 # Continued pipeline by me
-7. Concatenate filtered ".recode.vcf" scaffold files into one genome-wide file then separate by species. Instructions are found in 06_concatenate.sh. 
+7. Concatenate filtered ".recode.vcf" scaffold files into one genome-wide file then separate by species. Instructions are found in 06_concatenate. 
 
 # Discriminate Analysis of Principal Components (DAPC) 
 8. Export the concatenated sample .vcf files to local computer for further analysis in R using DAPC. 

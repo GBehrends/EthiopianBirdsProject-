@@ -10,9 +10,9 @@
 # Run fastSTRUCTURE with a logistic prior to detect subtle population structure on both filtering regimes. Thinned datasets are
 # needed due to the programs assumptions about linkage equilibrium. 
 
-python /home/gbehrend/conda/envs/py27/bin/structure.py -K 3 --prior=logistic --input=Zosterops_10kbp2 --output=output/<species>_10
+python <path to faststructure installation directory>/structure.py -K 3 --prior=logistic --input=<species>_10kbp2 --output=output/<species>_10
 
-python /home/gbehrend/conda/envs/py27/bin/structure.py -K 3 --prior=logistic --input=Zosterops_20kbp2 --output=output/<species>_20
+python <path to faststructure installation directory>/structure.py -K 3 --prior=logistic --input=<species>_20kbp2 --output=output/<species>_20
 
 
 

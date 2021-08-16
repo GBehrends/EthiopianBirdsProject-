@@ -29,7 +29,8 @@ conda activate python 2.7
 # Install fastStructure from the bioconda channel 
 conda install --channel bioconda faststructure
 
-# Locate what directory fastStructure was installed in, then submit fastStructure.sh
+# Locate what directory fastStructure was installed in, and make a note of its path. This path will need to be placed into the 
+# fastStructure.sh script before it is submitted. Also, the script will need to be modified for wahtever species you are analyzing. 
 
 
 

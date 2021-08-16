@@ -1,8 +1,8 @@
 #Start interactive session on cluster
 interactive -p nocona -c 1
 
-# For my project, I have a main project directory with all the data for individual species in separate directories. Within these directories are directories with 
-# 10kbp and 20kbp thinned vcfs. They all have the same scaffolds.
+# For my project, I have a main project directory with all the data for individual species in separate directories. Within these directories are 
+# directories with 10kbp and 20kbp thinned vcfs. They all have the same scaffolds.
 
 
 # Move to 10kbp thinned directory within a species, containing the vcf scaffolds.  

@@ -20,12 +20,19 @@ An analysis of a potential barrier to gene flow
 7. Concatenate filtered ".recode.vcf" scaffold files into one genome-wide file then separate by species. Instructions are found in 06_concatenate. 
 
 # Discriminate Analysis of Principal Components (DAPC) 
-8. Export the concatenated sample .vcf files to local computer for further analysis in R using DAPC. 
-9. Run DAPC script in R using the DAPC script. 
+1. Export the concatenated sample .vcf files to local computer for further analysis in R using DAPC. 
+2. Run DAPC in R using the DAPC script for each species individually.  
 
 # ADMIXTURE Analysis
-11. Run the ADMIXTURE script step by step on an interactive session. 
-12. Export the final labeled tsv files to local computer.
-13. Plot the ADMIXTURE results using the Plot Admixture script in R.  
+1. Run the ADMIXTURE script step by step on an interactive session. 
+2. Export the final labeled tsv files to local computer.
+3. Plot the ADMIXTURE results using the Plot Admixture script in R. 
+
+# Reich's Fst 
+1. Follow steps in Fst_Setup. 
+3. Filter all vcf scaffolds from genotyping step with Fst_Filter.sh. 
+4. Concatenate the filtered vcf scaffolds using the ConCat.sh script in shell. 
+5. Export each species concatenated vcf files to computer. 
+6. Run the Reich's Fst R script for each species.  
 
 

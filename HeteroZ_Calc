@@ -57,35 +57,18 @@ for i in $(cat ../specieslist); do sed 's/|/./g' ConcatSimpleVCF/${i}.simple.vcf
 
 ## STEP 5: Calculate ratio of het sites vs all sites (invariant and variant) in each concatenated modified.vcf in an interactive session ##  
 
-for i in $(cat ../../specieslist); do
-sed 's/|/./g' ${i}.simple.vcf | sed 's/[//]/./g' > ${i}.modified.vcf
-END="$(awk '{print NF}' ${i}.modified.vcf | sort -nu | tail -n 1)"
-Genotyped_Count="$( wc -l ${i}.modified.vcf | sed 's/ /\t/g' | cut -f1)"
+for i in $(ls | grep "simple.vcf"); do
+END="$(awk '{print NF}' ${i}.simple.vcf | sort -nu | tail -n 1)"
+Genotyped_Count="$( wc -l ${i}.simple.vcf | sed 's/ /\t/g' | cut -f1)"
 for ((x = 5; x <= END; ++x)); do 
-Het_Count="$(cut -f${x} ${i}.modified.vcf | grep -F -e '0.1' -e '1.0' | wc -l | sed 's/ /\t/g' | cut -f1)"
+Het_Count="$(cut -f${x} ${i}.simple.vcf | grep -F -e '0/1' -e '1/0' -e '1|0' -e '0|1' | wc -l | sed 's/ /\t/g' | cut -f1)"
 echo " scale=10; ${Het_Count} / ${Genotyped_Count}" | bc >> ${i}_Obs_Het_Temp.txt
 cat -n ${i}_Obs_Het_Temp.txt > ${i}_Obs_Het.txt; done
-rm *Temp.txt
-rm *.modified.vcf; done
-
-
-# Without VCF Modification #
-
-
-for i in $(ls | grep ".vcf" | sed 's/.vcf//g'); do
-grep -v "#" ${i}.vcf > ${i}2.vcf
-END="$(awk '{print NF}' ${i}2.vcf | sort -nu | tail -n 1)"
-Genotyped_Count="$( wc -l ${i}2.vcf| sed 's/ /\t/g' | cut -f1)"
-for ((x = 10; x <= END; ++x)); do 
-Het_Count="$(cut -f${x} ${i}2.vcf | grep -F -e '1|0' -e '0|1' -e '1/0' -e '0/1' | wc -l | sed 's/ /\t/g' | cut -f1)"
-echo "scale=10; ${Het_Count} / ${Genotyped_Count}" | bc >> ${i}_Obs_Het_Temp.txt
-cat -n ${i}_Obs_Het_Temp.txt > ${i}_Obs_Het.txt; done
-rm *Temp.txt; 
-rm *2.vcf; done 
+rm *Temp.txt; done
 
 
 
-## STEP 6: Place Sample IDs in Obs_Het Files (optional if you have the ID list) ##
+# STEP 6: Place Sample IDs in Obs_Het Files (optional if you have the ID list) ##
 
 paste <location of Sample ID list> ${i}_Obs_Het.txt | cut -f 1,3 > ${i}_Obs_Het_final.tsv
 

@@ -1,15 +1,21 @@
 # popmap = individual base names of fastq files, one line per individual
 
+# List of directories to loop through 
+specieslist <- c("Cossypha_semirufa", "Melaenornis_chocolatinus", "Parophasma_galinieri", "Turdus_abyssinicus", "Serinus_tristriatus", "Zosterops_poliogastrus")
+
+
+for (x in 1:length(specieslist){
+	setwd(paste("/lustre/scratch/gbehrend/EthiopianBirdsProject/", specieslist[x], sep=""))
 # make sure reference is indexed with bwa and samtools before use, and use CreateSequenceDictionary in GATK 
 	options(scipen=999)
-	project_directory <- "*working directory*"
+	project_directory <- "/lustre/scratch/gbehrend/EthiopianBirdsProject/Cossypha_semirufa"
 	directory_name <- "11_genotype_scripts"
-	reference_genome_location <- "*fasta file*"
+	reference_genome_location <- "lustre/work/gbehrend/ETH/GCF_003957565.2_bTaeGut1.4.pri_genomic.fasta"
 	cluster <- "quanah"
-	output_name <- "*project*_genotype"
-	popmap <- "*PopMap*"
+	output_name <- "Ethiopia_Genotype"
+	popmap <- "PopMap"
 	individuals <- read.table(popmap, sep="\t")
-	faidx <- read.table("camp_sp_genome_filtered.fasta.fai", sep="\t", stringsAsFactors=F)
+	faidx <- read.table("lustre/work/gbehrend/ETH/GCF_003957565.2_bTaeGut1.4.pri_genomic.fasta.fai", sep="\t", stringsAsFactors=F)
 	
 	min_scaffold_size <- 2000000
 	max_genotype_job_size <- 10000000
@@ -177,4 +183,5 @@
 	#gatk 4.0
 	gatk_command <- paste('/lustre/work/jmanthey/gatk-4.1.0.0/gatk --java-options "-Xmx80g" GenotypeGVCFs -R ', reference_genome_location, " -V gendb://", project_directory, "/02_vcf/", "${chr_array}", " --include-non-variant-sites -O ", project_directory, "/03_vcf/", "${name_array}", ".g.vcf", " -L ", "${interval_array}", sep="")
 	write(gatk_command, file=a.script, append=T)
+	}
 		

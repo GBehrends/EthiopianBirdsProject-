@@ -36,39 +36,40 @@ for i in $(cat ../specieslist); do
 workdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/${i}
 
 # Run vcftools 
-vcftools --vcf ${workdir}/03_vcf/${input_array}.g.vcf  --max-missing 1.0 --minQ 20 --minGQ 20 --minDP 6 --max-meanDP 50 --min-alleles 0 --max-alleles 2 --mac 1 --max-maf 0.49 --remove-indels --recode --recode-INFO-all --out ${i}/VCF/${input_array}
+vcftools --vcf ${workdir}/03_vcf/${input_array}.g.vcf  --max-missing 0.5 --minQ 20 --minGQ 20 --minDP 6 --max-meanDP 50  --max-alleles 2 --mac 1 --max-maf 0.49 --remove-indels --include-non-variant-sites --recode --recode-INFO-all --out ${i}/04_vcf_all_sites/${input_array}
 
 # Run bcftools to simplify vcfs for Het calculation 
-bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n ' ${i}/VCF/${input_array}.recode.vcf > ${i}/SimpleVCF/${input_array}.simple.vcf;
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%GT]\n ' ${i}/04_vcf_all_sites/${input_array}.recode.vcf > ${i}/04_vcf_all_sites/${input_array}.simple.vcf;
 done 
 
 
 
 ##  STEP 3: Concatenate the simplified vcf files using species list from previous analyses ##
 
-for i in $(cat ../specieslist); do cat ${i}/SimpleVCF/*vcf >> ConcatSimpleVCF/${i}.simple.vcf
+for i in $(cat ../specieslist); do cat ${i}/)4_vcf_all_allsites/*vcf >> ${i}/04_vcf_all_sites/${i}.simple.vcf
 
 
 
 ##  STEP 4: Modify the concatenated simple vcf to make het calculations simpler ##
-for i in $(cat ../specieslist); do sed 's/|/./g' ConcatSimpleVCF/${i}.simple.vcf | sed 's/[//]/./g' >  ConcatSimpleVCF/${i}.modified.vcf; done
+for i in $(cat ../specieslist); do sed 's/|/./g' 04_vcf_all_sites/${i}.simple.vcf | sed 's/[//]/./g' >  04_vcf_all_sites/${i}.modified.vcf; done
 
 
 
 ## STEP 5: Calculate ratio of het sites vs all sites (invariant and variant) in each concatenated modified.vcf in an interactive session ##  
 
 for i in $(ls | grep "simple.vcf"); do
-END="$(awk '{print NF}' ${i}.simple.vcf | sort -nu | tail -n 1)"
-Genotyped_Count="$( wc -l ${i}.simple.vcf | sed 's/ /\t/g' | cut -f1)"
+END="$(awk '{print NF}' ${i} | sort -nu | tail -n 1)"
 for ((x = 5; x <= END; ++x)); do 
-Het_Count="$(cut -f${x} ${i}.simple.vcf | grep -F -e '0/1' -e '1/0' -e '1|0' -e '0|1' | wc -l | sed 's/ /\t/g' | cut -f1)"
+Genotyped_Count="$(cut -f${x} ${i} | wc -l | sed 's/ /\t/g' | cut -f1)"
+Het_Count="$(cut -f${x} ${i} | grep -F -e '0/1' -e '1/0' -e '1|0' -e '0|1' | wc -l | sed 's/ /\t/g' | cut -f1)"
 echo " scale=10; ${Het_Count} / ${Genotyped_Count}" | bc >> ${i}_Obs_Het_Temp.txt
-cat -n ${i}_Obs_Het_Temp.txt > ${i}_Obs_Het.txt; done
+cat -n ${i}_Obs_Het_Temp.txt > ${i}_Het.txt; done
 rm *Temp.txt; done
 
 
 
 # STEP 6: Place Sample IDs in Obs_Het Files (optional if you have the ID list) ##
+# Sample ID list must be in the same order as the columns in your simple.vcf file
 
 paste <location of Sample ID list> ${i}_Obs_Het.txt | cut -f 1,3 > ${i}_Obs_Het_final.tsv
 

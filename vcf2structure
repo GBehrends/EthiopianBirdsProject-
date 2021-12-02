@@ -1,0 +1,171 @@
+#################################################################################################################
+####### For preparing STRUCTURE files with informative smapling locations used in LOCPRIOR STRUCTURE models #####
+#################################################################################################################
+
+### This script assumes that vcf files have been generated with desired thinning parameters for linkage equilibrium. ###
+### Gather 10 kb and 20kb thinnned vcfs and simplify those files using a script ###
+
+#!/bin/sh
+#SBATCH --chdir=./
+#SBATCH --job-name=simplify
+#SBATCH --nodes=1 --ntasks=4
+#SBATCH --partition 
+#SBATCH --time=48:00:00
+#SBATCH --mem-per-cpu=8G
+#SBATCH --array=1-125
+
+
+# Preparing vcf files to be converted into structure format  
+
+. ~/conda/etc/profile.d/conda.sh
+conda activate vcftools
+
+mkdir simple
+
+# define input files from helper file during genotyping
+input_array=$( head -n${SLURM_ARRAY_TASK_ID} helper6.txt | tail -n1 )
+
+bcftools query -f '%POS\t%REF\t%ALT[\t%GT]\n ' ${input_array}.recode.vcf > simple/${input_array}.simple.vcf
+
+
+
+
+### Run the vcf through this conversion script developed by Dr. Joseph Manthey @https://github.com/jdmanthey ###
+
+# use a simplified vcf as input for creating a structure file with snps at least minimum_dist apart
+
+setwd("<location of simple vcf files>")
+
+# column headers
+vcf_colnames <- c("POS", "REF", "ALT", "1", "2", "3", "4", "5", "6", "7", "8")
+options(scipen=999)
+
+# set up names of individual samples
+ind_names <- c("<list of sample IDs as they appear in the vcf file>")
+
+
+# minimum distance between snps
+minimum_dist <- 10000
+
+
+# order individuals west to east
+individuals_ordered <- ind_names[c(1,2,3,4,5,6,7,8)]
+
+# all the files to read
+x_files <- list.files(pattern="*.simple.vcf")
+
+# determine unique chromosomes
+x_unique <- unique(sapply(strsplit(x_files, "__"), "[[", 1))
+
+# loop for each chromosome
+for(a in 1:length(x_unique)) {
+  print(a)
+  print(paste("Reading files"))
+  # read in all the files and concatenate them
+  b_files <- x_files[sapply(strsplit(x_files, "__"), "[[", 1) %in% x_unique[a]]
+  for(b in 1:length(b_files)) {
+    if(b == 1) {
+      a_rep <- read.table(b_files[b], stringsAsFactors=F, sep="")
+    } else {
+      a_rep <- rbind(a_rep, read.table(b_files[b], stringsAsFactors=F, sep=""))
+    }
+  }
+  print(paste("Removing indels"))
+  # remove indels
+  a_rep <- a_rep[nchar(a_rep[,2]) == 1 & nchar(a_rep[,3]) == 1, ]
+  print(paste("Removing variants with missing data"))
+  # remove sites with missing data
+  for(b in 4:ncol(a_rep)) {
+    a_rep <- a_rep[grepl(pattern="\\./\\.", a_rep[,b]) == F,]
+  }
+  print(paste("Subsetting SNPs by distance"))
+  # site positions and distances
+  site_positions <- a_rep[,1]
+  keep <- site_positions[1]
+  site_positions <- site_positions[site_positions > site_positions[1] + minimum_dist]
+  while(length(site_positions) > 0) {
+    keep <- c(keep, site_positions[1])
+    site_positions <- site_positions[site_positions > site_positions[1] + minimum_dist]
+  }
+  new_a_rep <- a_rep[match(keep, a_rep[,1]),]
+  
+  # modify all genotypes to indicate the alleles rather than 0/1
+  for(b in 4:ncol(new_a_rep)) {
+    # remove phasing information
+    new_a_rep[,b] <- gsub("\\|", "/", new_a_rep[,b])
+    
+    # replace 0 and 1 with arbitrary letters
+    new_a_rep[,b] <- gsub("0", "w", new_a_rep[,b])
+    new_a_rep[,b] <- gsub("1", "v", new_a_rep[,b])		
+  }
+  for(b in 1:nrow(new_a_rep)) {
+    # replace those arbitrary letters with the correct genotypes for structure
+    new_a_rep[b, 4:ncol(new_a_rep)] <- gsub("w", new_a_rep[b,2], new_a_rep[b, 4:ncol(new_a_rep)])
+    new_a_rep[b, 4:ncol(new_a_rep)] <- gsub("v", new_a_rep[b,3], new_a_rep[b, 4:ncol(new_a_rep)])		
+  }
+  for(b in 4:ncol(new_a_rep)) {
+    # replace genotype letters with numbers for structure
+    new_a_rep[,b] <- gsub("A", "1", new_a_rep[,b])
+    new_a_rep[,b] <- gsub("C", "2", new_a_rep[,b])
+    new_a_rep[,b] <- gsub("G", "3", new_a_rep[,b])
+    new_a_rep[,b] <- gsub("T", "4", new_a_rep[,b])
+  }
+  
+  
+  # write names to column headers
+  name_header <- c()
+  for(b in 1:length(ind_names)) {
+    name_header <- c(name_header, ind_names[b])
+    name_header <- c(name_header, ind_names[b])
+  }
+  if(a == 1) {
+    write(name_header, file="<species>.structure", sep="\t", ncolumns=50)
+  }
+  
+  # prepare the matrix for writing to file
+  output <- list()
+  for(b in 4:ncol(new_a_rep)) {
+    output[[((b-3)*2 - 1)]] <- as.character(sapply(strsplit(new_a_rep[,b], "/"), "[[", 1))
+    output[[((b-3)*2)]] <- as.character(sapply(strsplit(new_a_rep[,b], "/"), "[[", 2))
+  }
+  # combine the list
+  output2 <- c()
+  for(b in 1:length(output)) {
+    if(b == 1) {
+      output2 <- output[[1]]
+    } else {
+      output2 <- cbind(output2, output[[b]])
+    }
+  }
+  # write to output
+  write.table(output2, file="<species>.structure", sep="\t", quote=F, row.names=F, col.names=F, append=T)
+  
+}
+
+# rewrite the output transposed
+x <- read.table(file="Zosterops_poliogastrus_10000.structure", sep="\t", stringsAsFactors=F)
+x <- t(x)
+write.table(x, file="<species>.structure", sep="\t", quote=F, row.names=F, col.names=F)
+
+
+### Now create a file with location information converted into integer format. This will be inserted as the second column in the structure file. ###
+# The file should look something like this, with each sampling location repeating twice to account for the fact that each sample in this structure file occupies
+# 2 rows. This file will be called popfile in this example. 
+
+1
+1
+1
+1
+2
+2
+3
+3
+
+
+### You will then insert this sampling location information into the structure file ###
+cut -f1,1 <structure file> > <Species>_ID.txt
+cut -f1,1 --complement <structure file> > <Species>_therest.txt
+paste <Species>_ID.txt popfile <Species>_therest.txt
+
+### If done correctly, this process will result in a structure input file ready to be run with the LOCPRIOR models to detect subtle population structure. ###  
+

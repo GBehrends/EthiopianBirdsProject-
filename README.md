@@ -4,7 +4,7 @@ An analysis of a potential barrier to gene flow
 # Genotyping pipeline 
 # Adapted from pipeline by Joseph D. Manthey @ https://github.com/jdmanthey/camponotus_relatedness
 1. Perform all steps in 01_setup.sh interactively.
-2. Modify the 02_trim_align.sh script as necessary for your directory, put it in your 10_align_script directory, and submit the script for running.
+2. Modify the 02_trim_align.sh script as necessary for your directory, put it in your 10_align_script directory, and submit the script for running. If using singularity, use the singularity version. 
 3. Run an interactive job on the cluster.
     a. Move to your main working directory
     b. Load the module for R (module load R) and start R (R)

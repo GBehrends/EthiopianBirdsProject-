@@ -20,14 +20,11 @@ input_array=$( head -n${SLURM_ARRAY_TASK_ID} helper6.txt | tail -n1 )
 
 ##  define main working directory
 workdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/${i} 
-outputdir=FST_QUAL20
 
-							      
-							      
+
 							      #### Grouping Filters ###
 ## run vcftools set to 6 minDP filter  
-outputdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/Fst/${i} # Define output directory
-
+outputdir=${workdir}/FST_QUAL20 # Define output directory
 vcftools --vcf  ${workdir}/03_vcf/${input_array}.g.vcf  --max-missing 1.0 --minQ 20 --minGQ 20 --minDP 6 --max-meanDP 50 --min-alleles 2 --max-alleles 2 --mac 1  --max-maf 0.49 --remove-indels --recode --recode-INFO-all --out ${outputdir}/${input_array}
 
 done; 

@@ -20,7 +20,7 @@ input_array=$( head -n${SLURM_ARRAY_TASK_ID} helper6.txt | tail -n1 )
 
 ##  define main working directory
 workdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/${i} 
-
+outputdir=FST_QUAL20
 
 							      
 							      
@@ -33,6 +33,13 @@ vcftools --vcf  ${workdir}/03_vcf/${input_array}.g.vcf  --max-missing 1.0 --minQ
 done; 
 
 done
+
+## Remove chromsomes 4A (partial neosex chromosome) and Z because they interfere with genome-wide FST calculations.  
+for x in $(ls ${workdir}/FST_QUAL20/NC_044241.2*); do rm ${x}; done
+for x in $(ls ${workdir}/FST_QUAL20/NC_044216.2*); do rm ${x}; done
+
+
+
 
 
 

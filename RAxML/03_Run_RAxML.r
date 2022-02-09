@@ -1,6 +1,6 @@
 
 #### R Script for Generating RAxML Pipeline by Joseph Manthey @ https://github.com/jdmanthey/certhia_phylogeography/blob/main/08a_phylo_stats_50kbp.r
-## Modify for your own directory
+## Modify for your own directory as well as with the window size you want. This will generate a script to run RAxML. 
 
 options(scipen=999)
 	project_directory <- "<RAxML Directory>"

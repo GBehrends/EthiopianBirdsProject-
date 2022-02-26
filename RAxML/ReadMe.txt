@@ -56,7 +56,7 @@ sumtrees.py --output=<species>.tre --min-clade-freq=0.05 <species>.trees
 java -jar <Path>/Astral/astral.5.7.8.jar -i <species>.trees -o <species>_Astral.tre
 
 
-# Any program able to recognize Nexus format fils can now be used for visualization
+# Any program able to recognize Nexus format files can now be used for visualization
 
 # 04_Modify_Lengths.r 
 Branch lengths in ASTRAL species trees are not informative. This script modifies those lengths to that desired, and plots 

@@ -1,6 +1,8 @@
 ## A pipeline to generate gene trees using RAxML by specified windows of the reference assembly. 
 
-# First download the following to your working directory:
+# First download the following to your working directory. Files provided by Dr Joseph Manthey @ 
+https://github.com/jdmanthey/certhia_phylogeography
+
 window_stat_calculations.r 
 create_fasta.r
 create_fasta_from_vcf.r

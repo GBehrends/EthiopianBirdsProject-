@@ -1,25 +1,22 @@
 ## PLotting PCA Results from Plink ##
+# Some code adapted from Plink PCA Tutorial @ https://speciationgenomics.github.io/pca/
 
 library(tidyverse)
 library(stringr)
 
-# Set all the population vectors for each species
-Cossypha_semirufa_pop<- as.factor(c("Bale Mountains", "Bale Mountains", "Bale Mountains", "Menagesha", "Menagesha", "Choke_Mountains", "Choke_Mountains", "Choke_Mountains")) 
+# Set all the Location vectors for each species in this fashion. Location idenifiers for 
+# each sample should be in the same order as the sample names appear in the VCF. 
+<species>_Pop <- as.factor(c("Bale Mountains", "Bale Mountains", "Bale Mountains", 
+                             "Menagesha", "Menagesha", "Choke_Mountains", 
+                             "Choke_Mountains", "Choke_Mountains")) 
 
-Parophasma_galinieri_pop<- as.factor(c("Bale Mountains", "Bale Mountains", "Menagesha", "Choke_Mountains", "Choke_Mountains", "Choke_Mountains")) 
-
-Melaenornis_chocolatinus_pop <- as.factor(c("Bale Mountains", "Bale Mountains", "Menagesha", "Menagesha", "Menagesha", "Bale Mountains", "Choke Mountains")) 
-
-Serinus_tristriatus_pop<- as.factor(c("Bale Mountains", "Bale Mountains", "Menagesha", "Menagesha", "Menagesha", "Choke Mountains", "Choke Mountains", "Choke Mountains")) 
-
-Turdus_abyssinicus_pop<- as.factor(c("Bale Mountains", "Bale Mountains", "Bale Mountains", "Menagesha", "Menagesha", "Menagesha", "Choke_Mountains", "Choke_Mountains", "Choke_Mountains")) 
-
-Zosterops_poliogastrus_pop<- as.factor(c("Bale Mountains", "Menagesha", "Menagesha", "Menagesha", "Bale Mountains", "Choke_Mountains", "Choke_Mountains", "Choke_Mountains")) 
+# Set colors for your locations, one color per location
+Loc_Colors <- c("wheat3", "olivedrab","orchid4")
 
 
 # Getting list of files to loop through
-setwd("/Volumes/T7/Scripts_and_Data/PCA/eigen")
-outputdir <- "/Volumes/T7/Scripts_and_Data/PCA/Plots/"
+setwd("<path to eigenval and eigenvec files>")
+outputdir <- "<directory for plot outputs>"
 x_files <- list.files()
 names <- sapply(strsplit(x_files, "\\."), "[[", 1)
 
@@ -39,23 +36,24 @@ for (x in 1:length(names)){
   colnames(pca)[ncol(pca)]<- "Location"
   pca <- as_tibble(pca)
 
-  # first convert to percentage variance explained
+  # Percent of variance explained
   pve <- data.frame(PC = 1:nrow(pca), pve = eigenval/sum(eigenval)*100)
   
-  # make plot
+  # Plot
   print(ggplot(pve, aes(PC, pve)) + geom_bar(stat = "identity")
-  + ylab("Percentage variance explained") + theme_light()) 
-  
-  # calculate the cumulative sum of the percentage variance explained
-  cumsum(pve$pve)
+  + ylab("Percentage variance explained") + theme_bw()) 
+ 
   
     a <-ggplot(pca, aes(PC1, PC2, col = Location)) + 
     geom_point(size = 3) +
-    scale_colour_manual(values = c("wheat3", "olivedrab","orchid4")) +
+    scale_colour_manual(values = Loc_Colors) +
     coord_equal() + theme_bw() +
     xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + 
       theme(plot.margin = unit(c(0, 0, 0, 0), "cm"),
                                legend.position = "none") +
+                               
+   # May have to modify xlim() and ylim() depending on spread of data
+   
       xlim(c(-0.7, 0.7)) +
       ylim(c(-0.9, 0.9)) +
       ggtitle(str_replace(str_remove(names[x], "_[0-9]+"), "_", " ")) +
@@ -76,5 +74,3 @@ dev.off()
 pdf(file = paste0(outputdir, "Facet20KBP.pdf"), height = 6, width = 8) 
 plot_grid(plotlist=mget(ls(pattern = "20_Plot")))
 dev.off()
-
-plot(Serinus_tristriatus_10_Plot)

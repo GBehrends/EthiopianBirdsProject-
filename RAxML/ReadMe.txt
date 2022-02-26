@@ -58,4 +58,8 @@ java -jar <Path>/Astral/astral.5.6.3.jar -i <species>.trees -o <species>_Astral.
 
 # Any program able to recognize Nexus format fils can now be used for visualization
 
-# Terminal branch lengths in ASTRAL species trees are not informative. To modify branch lengths use the 04_Modify_Lengths.r script. 
+# 04_Modify_Lengths.r 
+Branch lengths in ASTRAL species trees are not informative. This script modifies those lengths to that desired, and plots 
+the trees. 
+
+

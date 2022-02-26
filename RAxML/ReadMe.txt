@@ -1,0 +1,58 @@
+## A pipeline to generate gene trees using RAxML by specified windows of the reference assembly. 
+
+# First download the following to your working directory:
+window_stat_calculations.r 
+create_fasta.r
+create_fasta_from_vcf.r
+calculate_windows.r
+
+
+# Now create popmaps for each species in the following fashion (tab delimited): 
+Individual	Number	PopName
+Zosterops_poliogastrus_EB013	1	Bale_Mountains
+Zosterops_poliogastrus_EB049	2	Menagesha
+Zosterops_poliogastrus_EB050	3	Menagesha
+Zosterops_poliogastrus_EB051	4	Menagesha
+Zosterops_poliogastrus_EB065	5	Bale_Mountains
+Zosterops_poliogastrus_EB081	6	Choke_Mountains
+Zosterops_poliogastrus_EB089	7	Choke_Mountains
+Zosterops_poliogastrus_EB090	8	Choke_Mountains
+
+
+# 01_Chrom_ConcatSort.sh
+Use this script to prepare VCFs that were split through the previous genotyping step in this project.
+
+
+# 02_RAxML_FilterIndex.sh
+Use this script to filter gVCFs to include invariant and variant sites for the gene trees. Also, this script will bgzip and tabix
+the files in order to simplify the job of calling windows later. 
+
+
+# 03_Run_RAxML.r
+An R script for generating a template shell submission script to run RAxML on your windows. Depending on your directory structure, 
+the output shell script may have to be modified. 
+
+
+# Open an interactive session
+
+
+# Run the following in the directory containing your output trees to get the amount of trees that were 
+kept (Save this to an excel sheet for further reporting):
+l | grep "RAxML_bipartitions." | wc -l
+
+
+# Combine gene trees into one .trees file 
+cat RAxML_bipartitions.* >> <species>.trees
+
+
+# Create maximum clade credibility trees with summary of bootstrap support with the sumtrees.py script from DendroPy
+# --min-clade-freq option is used to only include clades supported by more than 5% of bootstraps
+sumtrees.py --output=<species>.tre --min-clade-freq=0.05 <species>.trees 
+
+
+# Create ASTRAL III species trees
+java -jar <Path>/Astral/astral.5.6.3.jar -i <species>.trees -o <species>_Astral.tre
+
+
+# Any program able to recognize Nexus format fils can now be used for visualization
+

@@ -53,7 +53,7 @@ sumtrees.py --output=<species>.tre --min-clade-freq=0.05 <species>.trees
 
 
 # Create ASTRAL III species trees
-java -jar <Path>/Astral/astral.5.6.3.jar -i <species>.trees -o <species>_Astral.tre
+java -jar <Path>/Astral/astral.5.7.8.jar -i <species>.trees -o <species>_Astral.tre
 
 
 # Any program able to recognize Nexus format fils can now be used for visualization

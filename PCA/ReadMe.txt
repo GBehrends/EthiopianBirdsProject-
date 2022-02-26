@@ -5,5 +5,5 @@
 # Run the VCFtoPlinkPCA.sh script to run a Principal Componenets Analysis on the VCF files 
 
 # Use the .eigenval and .eigenvec files from the PCA in the Plot_PCA.r script to generate plots of 
-the data
+the data. Modify the script for your file names and species. 
 

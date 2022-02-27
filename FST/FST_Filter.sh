@@ -11,7 +11,7 @@
 		
 		
 		
-									  ###Beginning Steps###
+							###Beginning Steps###
 
 for i in $(cat ../specieslist); do 
 
@@ -22,14 +22,13 @@ input_array=$( head -n${SLURM_ARRAY_TASK_ID} helper6.txt | tail -n1 )
 workdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/${i} 
 
 
-							      #### Grouping Filters ###
+							#### Grouping Filters ###
 ## run vcftools set to 6 minDP filter  
 outputdir=${workdir}/FST_QUAL20 # Define output directory
-vcftools --vcf  ${workdir}/03_vcf/${input_array}.g.vcf  --max-missing 1.0 --minQ 20 --minGQ 20 --minDP 6 --max-meanDP 50 --min-alleles 2 --max-alleles 2 --mac 1  --max-maf 0.49 --remove-indels --recode --recode-INFO-all --out ${outputdir}/${input_array}
+vcftools --vcf  ${workdir}/03_vcf/${input_array}.g.vcf  --max-missing 1.0 --minQ 20 --minGQ 20 --minDP 6 --max-meanDP 50 \
+--min-alleles 2 --max-alleles 2 --mac 1  --max-maf 0.49 --remove-indels --recode --recode-INFO-all --out ${outputdir}/${input_array}
 
-done; 
-
-done
+done; done
 
 ## Remove chromsomes 4A (partial neosex chromosome) and Z because they interfere with genome-wide FST calculations.  
 for x in $(ls ${workdir}/FST_QUAL20/NC_044241.2*); do rm ${x}; done

@@ -32,9 +32,9 @@ for (x in 1:length(names)){
   names(pca)[1] <- "ind"
   names(pca)[2:ncol(pca)] <- paste0("PC", 1:(ncol(pca)-1))
   pop <- paste0(str_remove(names[x], "[0-9]+"), "pop")
-  pca <- cbind.data.frame(pca, get(pop))
-  colnames(pca)[ncol(pca)]<- "Location"
+  pca$Location <- get(pop)
   pca <- as_tibble(pca)
+  pca$Location <- as.factor(pca$Location)
 
   # Percent of variance explained
   pve <- data.frame(PC = 1:nrow(pca), pve = eigenval/sum(eigenval)*100)

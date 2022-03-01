@@ -49,14 +49,17 @@ for (x in 1:length(names)){
     scale_colour_manual(values = Loc_Colors) +
     coord_equal() + theme_bw() +
     xlab(paste0("PC1 (", signif(pve$pve[1], 3), "%)")) + 
-      theme(plot.margin = unit(c(0, 0, 0, 0), "cm"),
-                               legend.position = "none") +
+      theme(plot.margin = unit(c(0, 0.2, 0, 0.2), "cm"),
+                               legend.position = "none",
+           plot.title = element_text(face = "italic") +
                                
    # May have to modify xlim() and ylim() depending on spread of data
    
       xlim(c(-0.7, 0.7)) +
       ylim(c(-0.9, 0.9)) +
-      ggtitle(str_replace(str_remove(names[x], "_[0-9]+"), "_", " ")) +
+      ggtitle(paste(substr(names[x],1,1), ". ",
+                    sapply(strsplit(str_replace(str_remove(names[x], "_[0-9]+"),
+                                                "_", " "), split = " "),"[", 2))) +
     ylab(paste0("PC2 (", signif(pve$pve[2], 3), "%)"))
     
     file_name <- paste0(names[x], ".pdf")

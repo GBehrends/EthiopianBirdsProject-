@@ -2,7 +2,7 @@
 
 1. Begin with a new working directory with nothing in it
 
-2. Run 01_Setup.sh
+2. Run 01_Setup step by step 
 
 3. Install GATK 4.2.3.0 using the GATK install script @ https://github.com/jdmanthey/installs/blob/main/gatk4.2.3.0
 

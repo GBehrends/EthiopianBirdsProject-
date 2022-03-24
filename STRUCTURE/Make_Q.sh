@@ -1,6 +1,6 @@
 ## Generating Q files to be used in Plot_STRUCTURE.R 
 
-# Assuming that you used a dataset with 0 missing data allowed, this code will isolate the Q matrix. 
+# Assuming that you used a dataset with 0 missing data allowed, this code will isolate the Q matrix, and make it tab delimited. 
 grep "(0)" <input file> | sed 's/    /\t/g' | sed 's/   /\t/g' | sed 's/  /\t/g' | sed 's/ /\t/g' > <input file>.Q
 
 # If your dataset allowed missing data, use this code instead. 

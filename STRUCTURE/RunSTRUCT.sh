@@ -15,9 +15,10 @@ input=<path to input structure file>
 output=<path to output>
 
 # Note that this script was run on STRUCTURE files formatted so that each individual's genotypes 
-# comprised two rows and not two columns. 
+# comprised two rows and not two columns. Gathering the info on number of loci and individuals 
+# from the structure files themselves assists in iterating by for loop if you chose to do so. 
 structure -K 3 -N $(cut -f1 ${input} | uniq | wc -l) \
 -L $(awk '{print NF-3; exit}' ${input}) \
 -i ${input} \
--o ${output} \
+-o ${output}_replicate \
 -D $RANDOM 

@@ -1,13 +1,70 @@
-## Generating Q files to be used in Plot_STRUCTURE.R 
+################################################################################
+# 
+### Q.Matrix: 
+# For extracting Q matrices representing the ancestry proportions/assignment 
+# probabilities from standard STRUCTURE outputs after running on the command 
+# line. Q matrices can then be plotted with ease in R.  
+#
+#-------------------------------------------------------------------------------
+#
+## Usage: 
+# Q.Matrix(file, k, extraCols)
+#
+#-------------------------------------------------------------------------------
+# 
+## Input:
+# file - path to f file outputted by command line STRUCTURE run
+# k - the number of k selected for STRUCTURE run
+# extraCols - a character vector of names of any extra/nonstandard columns such 
+# those containing location information.
+#
+#--------------------------------------------------------------------------------
+#
+## Output:
+# A data frame containing the sample ID column, columns corresponding to each k,
+# and the extra columns, respectively. If extra columns exist but no names are
+# given, column names will be assigned a numerical value 1 through the number 
+# of columns. 
+#
+#_______________________________________________________________________________
+#
+# Garrett J. Behrends (04/2022)
+################################################################################
 
-# Assuming that you used a dataset with 0 missing data allowed, this code will isolate the Q matrix, and make it tab delimited. 
-grep "(0)" <input file> | sed 's/    /\t/g' | sed 's/   /\t/g' | sed 's/  /\t/g' | sed 's/ /\t/g' > <input file>.Q
-
-# If your dataset allowed missing data, use this code instead. 
-sed -n '/Label/,/Estimated Allele Frequencies in each cluster/p' <name of file> | head -n <number of individuals +1> | tail -n <number of individuals> | sed 's/    /\t/g' | sed 's/   /\t/g' | sed 's/  /\t/g' | sed 's/ /\t/g' > ${i.%*}.Q
-
-# Add the column of sample IDs to the Q matrix. I already had these in a file in the same order so I pasted it on. 
-paste <input file>.Q <location of sample ID list> | sed 's/\t\t/\t/g' > <input file>_2.Q
 
 
-# Files are now ready to be used in Plot_STRUCTURE.R
+
+
+Q.Matrix <- function(file, k, extraCols) {
+  
+  require(readr)
+  
+  Q <- read_lines(file)
+  Q <- grep("\\(.\\)", Q, value = T)
+  excess <- paste0(unlist(c("NA", ":", "\\(.\\)")), collapse = "|")
+  spaces <- paste0(unlist(c("    ", "   ", "  ", " ")), collapse = "|")
+  Q <- gsub(spaces, replacement = "\t", Q)
+  Q <- read.table(text = Q, sep = "\t")
+  Q <- Q[-grep(excess, Q)] 
+  
+  if (missing(extraCols)) {
+    print("No extra column names specified...")
+    if (ncol(Q) - (k + 1) > 0) {
+      s <- (ncol(Q) - (k + 1))
+      Q <- Q[c(1, ((ncol(Q) - k) + 1):ncol(Q), 2:(ncol(Q) - k))]
+      colnames(Q) <- c("Sample", paste0("K", rep(1:k)), paste0(seq(1:s)))
+      return(Q)
+    }
+    else {
+      Q <- Q[c(3, (ncol(Q) - k):(ncol(Q)-1))]
+      colnames(Q) <- c("Sample", paste0("K", rep(1:k)))
+      return(Q)
+    }
+  }
+    else {
+      s <- (ncol(Q) - (k + 1))
+      Q <- Q[c(1, ((ncol(Q) - k) + 1):ncol(Q), 2:(ncol(Q) - k))]
+      colnames(Q) <- c("Sample", paste0("K", rep(1:k)), paste0(extraCols))
+      return(Q)
+    }
+}

@@ -12,10 +12,11 @@
 conda activate <env_name>
 
 # SampleID.txt was a list of all samples used here to calculate the number of individuals in the input structure file. -L was the number of loci with 3
-# subtracted to account for the added columns containing things like population info. -D was was set to a random number for the starting seed. 
+# subtracted to account for the added columns containing things like population info. -D was was set to a random number for the starting seed. You can replace
+# replicate in the output file name using a for loop and sed before submitting so each replicate has its own name and its own job.  
 structure -K 3 \
 -N $(awk 'END{print NR}' ../../Zosterops_poliogastrus/00fastq/SampleID.txt) \
 -L $(awk '{print NF-3; exit}' ../strct_files/Zosterops_poliogastrus_50000_corrected.structure) \
 -i ../strct_files/Zosterops_poliogastrus_50000_corrected.structure \
--o ../outdir/Zosterops_poliogastrus_50_replicate \
+-o ../outdir/Zosterops_poliogastrus_50_<replicate> \
 -D $RANDOM

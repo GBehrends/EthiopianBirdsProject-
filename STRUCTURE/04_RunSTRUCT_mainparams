@@ -4,7 +4,7 @@
  #define mainparams
  #define MAXPOPS 1
  #define BURNIN 100000
- #define NUMREPS 800000
+ #define NUMREPS 500000
  #define INFILE ../strctfiles/Cossypha_semirufa_20000_2.structure
  #define OUTFILE ../output/Cossypha_semirufa20k_1
  #define NUMINDS 8

@@ -1,4 +1,4 @@
-## A pipeline to generate gene trees using RAxML by specified windows of the reference assembly. 
+## A pipeline to generate gene trees using RAxML by specified windows of the reference assembly, and then generate species trees using DendroPy and ASTRAL III. 
 
 # 01_Run_RAxML.r
 An R script for generating a template shell submission script to run RAxML on your windows. Depending on your directory structure, 

@@ -19,19 +19,12 @@ library(stringr)
 # depending on the species. Using this location information, I can test the 
 # monophyly of all individuals belonging to each location in each gene tree. 
 df <- read.csv(file = "<location of csv>", header = F, sep = "\t")
-df <- df[-1]
-df <- df[c(1,3,6)]
-df$Locality <- gsub("Dinsho", "Bale", df$Locality)
-df$Locality <- gsub("Menagesha.*", "Menagesha", df$Locality)
-df$Locality <- gsub("Choke Mountains", "Choke", df$Locality)
-df$Locality <- gsub("Katcha", "Bale", df$Locality)
-df$Species <- gsub(" ", "_", df$Species)
 
 
 # To avoid bias from species with more gene trees, an equal random subsample 
 # of gene trees will be taken from each species. Here, sample size n 
-# correpsonds to number of gene trees present in the species with the least 
-# gene trees. This will maximize the sample size.
+# corresponds to number of gene trees present in the species with the least 
+# gene trees. 
 n <- 49157
 
 # Set the number of replicate mcc summary trees desired. 

@@ -12,8 +12,10 @@ options(scipen=999)
 	output_sh <- "phylo50KBP_array.sh"
 	
 	# Location of VCF files to be used and the vcf to get the header from for all windows
-	VCF_location <- "/lustre/scratch/gbehrend/EthiopianBirdsProject/RAxML/species"
-	start_VCF <- "NC_054767.1.vcf.gz"
+	VCF_location <- 
+	start_VCF <- 
+	
+	# Where to put the popmap containing individuals and sampling locations. 
 	popmap_location <- paste(project_directory, "/species/Group_PopMap.txt", sep = "")
 	
 	# read in reference index

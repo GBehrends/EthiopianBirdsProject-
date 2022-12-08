@@ -10,7 +10,7 @@
 # This is a script to generate an ASTRAL 3 species tree from the RAxML gene trees when each species had its own directory.
 # Script will also output a list with each species and how many gene trees were created for reference. 
 
-workdir=/lustre/scratch/gbehrend/EthiopianBirdsProject/
+workdir=<>
 
 array=$( head -n${SLURM_ARRAY_TASK_ID} ${workdir}/specieslist | tail -n1 )
 
@@ -19,5 +19,5 @@ cat ${workdir}/RAxML/${array}/windows/RAxML_bipartitions* >> ${workdir}/RAxML/${
 ls -U ${workdir}/RAxML/${array}/windows/RAxML_bipartitions* | wc -l >> ${workdir}/RAxML/50KBP_treeCounts.tsv
 
 # Creating ASTRAL trees with individuals forced into monophyletic groups 
-java -jar /lustre/work/gbehrend/Astral/astral.5.7.8.jar \ 
+java -jar astral.5.7.8.jar \ 
 -o ${workdir}/RAxML/${array}_50KBP_ASTRAL.tre

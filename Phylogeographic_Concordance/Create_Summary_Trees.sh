@@ -4,7 +4,7 @@
 interactive -p <> -c <>
 
 # Set working directory 
-workdir=<path to output sampled gene trees file> 
+workdir=<path to directory with output sampled gene trees file> 
 
 # For 3 hypothesis topologies
 for a in {1..3}; do

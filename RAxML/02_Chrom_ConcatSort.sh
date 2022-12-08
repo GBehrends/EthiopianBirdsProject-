@@ -10,7 +10,8 @@
 . ~/conda/etc/profile.d/conda.sh
 conda activate vcftools
 
-## Concatenating genotyped VCFs into complete chromosomes using a split chromosome list as an array job
+## Concatenating genotyped VCFs into complete chromosomes using a split chromosome list as an array job. You will need to determine what 
+# chromosomes were split for this list. 
 chr_array=$( head -n${SLURM_ARRAY_TASK_ID} <chrom_list> | tail -n1 )
 
 # Ending of file names will depend on how the chromosomal scaffolds were subdivided during genotyping

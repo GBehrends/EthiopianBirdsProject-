@@ -19,15 +19,28 @@ belong to across all the input gene trees.
 # Step 3
 Run the Make_ASTRAL_PC.sh script. 
 
-# Background for part 2
-To assess genome-wide support for alternate topologies, we used the custom R scripts to quantify support with 
-confidence intervals for each possible topology for our two proposed phylogeographic breaks. This was feasible
-because our hypothesis topology is a quartet with 3 location tips and an outgroup. Essentially all gene trees are 
-sampled across all species for 1 random sample per location plus the outgroup individual. The sampled tips are then
-stored as a unique topology in an output file. The gene trees are used to create maximum clade credibility trees 
-that represented bootstraps. This is repeated a number of times and trees are summarized again with confidence intervals.
-These summaries are the frequencies of each topology with a confidence interval. 
+
+
+## Background for part 2
+To assess genome-wide frequency/support for all possible topologies, we used custom R scripts. This was feasible
+because our hypothesis topologies are quartets with 3 location "tips" and an outgroup, so there are only 3 possible topologies.
+However, we are concerned with the relationships between locations and want support for each without reliance on counting monophyly. 
+Briefly, all gene trees from all species are sampled for 1 random tip per location plus the outgroup. The tips are then 
+renamed according to sampling location or "OG". All sampled topologies are stored in a file. Three tree files are then given for the 
+three possible topologies and sample toplogy support is summarized for each target topology as a bootstrap consensus tree. After 
+bootstrapping a number of times, The three hypotheses trees are summarized again with the boostraps to provide an estimate of the 
+frequency of each topology in the genome with confidence intervals. 
+
 
 # Step 1
+Run Gene_Tree_Sample.r. 
 
+# Step 2 
+Create hypothesis .tre files and name them h<topology number>.tre. These will serve as target trees to map support from sample topologies to. 
+
+# Step 3 
+Run Create_Summary_Trees.sh. It may be better to submit it as a batch job because it takes a while. 
+
+# Step 4
+Run Calculate_Quartet_Support.r to map suppport and confidence intervals onto the final trees and save them as .tre files instead of nexus. 
 

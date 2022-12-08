@@ -12,12 +12,13 @@
 library(ape)
 library(stringr)
 
-# Create table that contains every individual and their location information. 
+# Create a tsv that contains all individuals in one column and their 
+# corresponding sampling location in another column. 
 # Here I have three sampling locations called Bale, Menagesha, and Choke. These 
 # will represent three major nodes each having different numbers of individuals 
 # depending on the species. Using this location information, I can test the 
 # monophyly of all individuals belonging to each location in each gene tree. 
-df <- read.csv(file = "/Volumes/T7/Figures/Genotyping_Species_Information.csv")
+df <- read.csv(file = "<location of csv>", header = F, sep = "\t")
 df <- df[-1]
 df <- df[c(1,3,6)]
 df$Locality <- gsub("Dinsho", "Bale", df$Locality)

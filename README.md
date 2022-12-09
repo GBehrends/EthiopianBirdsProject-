@@ -6,3 +6,6 @@ else can be done (in that order). Also, RAxML has to be done before ASTRAL trees
 trees which ASTRAL scripts use.  
 
 - Many of these scripts rely on a file called "specieslist." Before begginning, it would be good to have a text file such as the example provided. 
+
+- Some of these scripts are for analyses not in my thesis including, DAPC, ADMIXTURE, and fastSTRUCTURE. I wrote some of these when I was just 
+starting out so any questions feel free to ask. 

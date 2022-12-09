@@ -1,6 +1,7 @@
 # Calculating Reich's Fst and Plotting the Results 
 
-Step 1: FST_Filter.sh - Filters VCF files from GATK using VCFTools and removes troublesome chromosomes in Passerines.  
+Step 1: FST_Filter.sh - Filters VCF files from GATK using VCFTools and removes troublesome neosex chromosomes in Passerines
+that could bias genome-wide estimates.  
 
 Step 2: Concat_Filtered.sh - Concatenates into single VCFs. 
 

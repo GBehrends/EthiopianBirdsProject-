@@ -36,7 +36,7 @@ frequency of each topology in the genome with confidence intervals.
 Run Gene_Tree_Sample.r. 
 
 ### Step 2 
-Create hypothesis .tre files and name them h<topology number>.tre. These will serve as target trees to map support from sample topologies to. 
+Create hypothesis .tre files and name them h1.tre, h2.tre, h3.tre, etc. These will serve as target trees to map support from sample topologies to. 
 
 ### Step 3 
 Run Create_Summary_Trees.sh. It may be better to submit it as a batch job because it takes a while. 

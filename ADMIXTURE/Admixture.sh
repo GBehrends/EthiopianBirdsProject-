@@ -3,11 +3,11 @@ cd EthiopianBirdsProject/ConcatVcf
 
 # Make a chromosome-map consisting of 2 columns, each containing a list of all chromosomes. An example can be seen in the main project folder. 
 # Since the chromosome map is the same for all species, it need only be made once. 
-# (Taken from JD Manthey)
+
 
 grep -v "#" <species+filter>.vcf | cut -f 1 | uniq | awk '{print $0"\t"$0}' > chrom_map.txt
 
-# Submit the plink_convert.sh script to convert the vcfs to plink format
+# Submit the vcf_to_plink.sh script to convert the vcfs to plink format
 
 # Intiate interactive session. 
 # Since admixture uses the outputted .ped files, I used a list of these files to run an admixture for loop to avoid running admixture 60 times individuals.

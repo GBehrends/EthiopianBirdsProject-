@@ -29,7 +29,7 @@ ${workdir}/MSMC2/${array}_demography/helper1.txt; done
 
 # MSMC2 output prefixes (helper2.txt): 
 sed 's,Cossypha_semirufa_demography/,,g' helper1.txt | sed 's,/bootstrap_,_b,g' | \
-sed 's,/\**txt,,g' >> ${workdir}/MSMC2/${array}_demography/helper2.txt 
+sed 's,/\*txt,,g' >> ${workdir}/MSMC2/${array}_demography/helper2.txt 
 
  
 

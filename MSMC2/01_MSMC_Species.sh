@@ -25,13 +25,11 @@ Rscript ${workdir}/MSMC2/${array}_msmc.r
 # Add species msmc file paths to a list that will be used when running MSMC2 (helper1.txt):
 cd ${array}_demography
 for i in $(find ~+ -type d | sed '1d' | sed 's,\./,,g'); do echo "${i}/*txt" >> \
-${workdir}/MSMC2/helper1.txt; done
+${workdir}/MSMC2/${array}_demography/helper1.txt; done
 
 # MSMC2 output prefixes (helper2.txt): 
-for i in $(find ~+ -type d | sed '1d' | sed 's,\./,,g'); do echo "${i}" >> \
-${workdir}/MSMC2/helper2.txt; done
-for i in $(find ~+ -type d | sed '1d' | sed 's,\./,,g'); do for x in {1..10}; do \
-echo "${i}_b${x}" >> ${workdir}/MSMC2/helper2.txt; done
+sed 's,Cossypha_semirufa_demography/,,g' helper1.txt | sed 's,/bootstrap_,_b,g' | \
+sed 's,/\**txt,,g' >> ${workdir}/MSMC2/${array}_demography/helper2.txt 
 
  
 

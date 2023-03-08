@@ -22,5 +22,11 @@ sed "s/species/${array}/g" ${workdir}/MSMC2/vcf_to_msmc.r > ${workdir}/MSMC2/${a
 # Convert vcfs to msmc format files for all species and their samples 
 Rscript ${workdir}/MSMC2/${array}_msmc.r
 
+# Add species msmc file paths to a list that will be used when running MSMC2. 
+cd ${array}_demography
+for i in $(find ~+ -type d | sed '1d' | sed 's,\./,,g'); do echo "${i}/*txt" >> \
+${workdir}/MSMC2/helper1.txt; done
+ 
+
 
 

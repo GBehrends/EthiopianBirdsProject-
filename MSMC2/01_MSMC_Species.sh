@@ -21,3 +21,6 @@ sed "s/species/${array}/g" ${workdir}/MSMC2/vcf_to_msmc.r > ${workdir}/MSMC2/${a
   
 # Convert vcfs to msmc format files for all species and their samples 
 Rscript ${workdir}/MSMC2/${array}_msmc.r
+
+
+

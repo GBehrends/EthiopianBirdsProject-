@@ -11,7 +11,8 @@ workdir=?
 
 for i in $(cat ../specieslist); do 
   cd ${i}_demography;
-  find ~+ -type -f | grep "scaf" >> ${workdir}/MSMC2/bootsrapslist.txt;
+  find ~+ -type f | grep "scaf" | wc -l >> \
+  /lustre/scratch/gbehrend/EthiopianBirdsProject/MSMC2/bootstrapslist.txt;
   cd ../; done 
 
 

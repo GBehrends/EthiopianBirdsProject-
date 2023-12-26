@@ -17,4 +17,4 @@ java -jar /lustre/work/gbehrend/Astral/astral.5.7.8.jar \
 -a ${workdir}/RAxML/${array}/map_file.txt \
 -i ${workdir}/RAxML/${array}_50KBP.trees \
 -o ${workdir}/RAxML/${array}_50KBP_ASTRAL_LocMono.tre \
---outgroup OG -q --branch-annotate 2
+--outgroup OG -t 2
